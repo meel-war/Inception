@@ -16,15 +16,21 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     cd /var/www/html
     wp core download --allow-root
 
-    wp config set WP_HOME 'https://meel-war.42.fr' --allow-root
-    wp config set WP_SITEURL 'https://meel-war.42.fr' --allow-root
-
     wp config create --allow-root \
         --dbname=$SQL_DATABASE \
         --dbuser=$SQL_USER \
         --dbpass=$SQL_PASSWORD \
         --dbhost=mariadb
     
+    wp config set WP_HOME 'https://meel-war.42.fr' --allow-root
+    wp config set WP_SITEURL 'https://meel-war.42.fr' --allow-root
+    wp config set FORCE_SSL_ADMIN true --raw --allow-root
+    wp config set --extra-php --allow-root <<PHP
+if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+    \$_SERVER['HTTPS'] = 'on';
+}
+PHP
+
     wp core install --allow-root \
         --url=$WP_URL \
         --title=$WP_TITLE \
