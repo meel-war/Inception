@@ -1,13 +1,13 @@
 NAME = inception
 
-DATA_PATH = /home/meel-war/Inception/src/data
+DATA_PATH = $(HOME)/data
 
 DOCKER_COMPOSE = docker compose -f src/docker-compose.yml
 
 all: build up
 
 build:
-		@echo "Preparation des dossiers pour les volumes..."
+		@echo "Preparation des dossiers pour les volumes dans $(DATA_PATH)..."
 		@mkdir -p $(DATA_PATH)/wordpress
 		@mkdir -p $(DATA_PATH)/mariadb
 		@echo "Construction des images Docker..."
@@ -23,7 +23,9 @@ down:
 
 fclean:
 		@echo "Nettoyage complet..."
-		$(DOCKER_COMPOSE) down -v --rmi all
+		@$(DOCKER_COMPOSE) down -v --rmi all
+		@sudo rm -rf $(DATA_PATH)
+		@docker systeme prune -af
 		
 re: fclean all
 
