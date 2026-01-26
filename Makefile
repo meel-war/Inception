@@ -25,7 +25,7 @@ fclean:
 		@echo "Nettoyage complet..."
 		@$(DOCKER_COMPOSE) down -v --rmi all
 		@sudo rm -rf $(DATA_PATH)
-		@docker system prune -a -f
+		@docker system prune -f
 		
 re: fclean all
 
