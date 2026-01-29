@@ -16,5 +16,5 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';
 FLUSH PRIVILEGES;
 EOF
 
-echo "MariaDB: Lancement de la configuration initiale..."
+echo "MariaDB: Start the configuration..."
 exec mysqld_safe --init-file=/tmp/db_setup.sql --bind-address=0.0.0.0

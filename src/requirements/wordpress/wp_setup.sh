@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo "WordPress: Attente de MariaDB..."
+echo "WordPress: Waiting MariaDB..."
 while ! mariadb-admin --user=$SQL_USER  --password=$SQL_PASSWORD --host=mariadb ping --silent; do
     sleep 2
 done
 
-echo "MariaDB est la"
+echo "MariaDB is up"
 if [ ! -f /var/www/html/wp-config.php ]; then
     echo "WordPress: Lancement de l'installation.."
 
@@ -24,12 +24,6 @@ if [ ! -f /var/www/html/wp-config.php ]; then
     
     wp config set WP_HOME 'https://meel-war.42.fr' --allow-root
     wp config set WP_SITEURL 'https://meel-war.42.fr' --allow-root
-    wp config set FORCE_SSL_ADMIN true --raw --allow-root
-    wp config set --extra-php --allow-root <<PHP
-if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-    \$_SERVER['HTTPS'] = 'on';
-}
-PHP
 
     wp core install --allow-root \
         --url=$WP_URL \
@@ -37,6 +31,13 @@ PHP
         --admin_user=$WP_ADMIN_USER \
         --admin_password=$WP_ADMIN_PASSWORD \
         --admin_email=$WP_ADMIN_EMAIL
+
+    wp user create \
+        $WP_USER    \
+        $WP_USER_EMAIL  \
+        --role=author   \
+        --user_pass=$WP_USER_PASSWORD \
+        --allow-root
 fi
 
 exec php-fpm7.4 -F
