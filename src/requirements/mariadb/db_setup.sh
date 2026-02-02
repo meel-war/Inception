@@ -17,4 +17,4 @@ FLUSH PRIVILEGES;
 EOF
 
 echo "MariaDB: Start the configuration..."
-exec mysqld_safe --init-file=/tmp/db_setup.sql --bind-address=0.0.0.0
+exec mysqld_safe --init-file=/tmp/db_setup.sql --bind-address=0.0.0.0 --port=3306

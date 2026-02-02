@@ -20,7 +20,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
         --dbname=$SQL_DATABASE \
         --dbuser=$SQL_USER \
         --dbpass=$SQL_PASSWORD \
-        --dbhost=mariadb
+        --dbhost=mariadb:3306
     
     wp config set WP_HOME 'https://meel-war.42.fr' --allow-root
     wp config set WP_SITEURL 'https://meel-war.42.fr' --allow-root
