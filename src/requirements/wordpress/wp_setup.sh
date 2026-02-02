@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "WordPress: Waiting MariaDB..."
-while ! mariadb-admin --user=$SQL_USER  --password=$SQL_PASSWORD --host=mariadb ping --silent; do
+while ! mariadb-admin --user=$SQL_USER  --password=$SQL_PASSWORD -P 3306 --host=mariadb ping --silent; do
     sleep 2
 done
 
