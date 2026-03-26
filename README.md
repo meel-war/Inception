@@ -301,7 +301,6 @@ docker exec -it mariadb bash        # Access container shell
 
 **Project:** Inception  
 **Developer:** meel-war  
-**Year:** 2026
 
 ---
 
